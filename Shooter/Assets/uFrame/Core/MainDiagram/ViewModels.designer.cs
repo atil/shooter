@@ -123,4 +123,38 @@ namespace Shooter {
                 base(aggregator) {
         }
     }
+    
+    public partial class BulletViewModelBase : uFrame.MVVM.ViewModel {
+        
+        public BulletViewModelBase(uFrame.Kernel.IEventAggregator aggregator) : 
+                base(aggregator) {
+        }
+        
+        public override void Bind() {
+            base.Bind();
+        }
+        
+        public override void Read(ISerializerStream stream) {
+            base.Read(stream);
+        }
+        
+        public override void Write(ISerializerStream stream) {
+            base.Write(stream);
+        }
+        
+        protected override void FillCommands(System.Collections.Generic.List<uFrame.MVVM.ViewModelCommandInfo> list) {
+            base.FillCommands(list);
+        }
+        
+        protected override void FillProperties(System.Collections.Generic.List<uFrame.MVVM.ViewModelPropertyInfo> list) {
+            base.FillProperties(list);
+        }
+    }
+    
+    public partial class BulletViewModel {
+        
+        public BulletViewModel(uFrame.Kernel.IEventAggregator aggregator) : 
+                base(aggregator) {
+        }
+    }
 }

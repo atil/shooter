@@ -169,4 +169,54 @@ namespace Shooter {
             PlayerShipViewModelManager.Remove(viewModel);
         }
     }
+    
+    public class BulletControllerBase : uFrame.MVVM.Controller {
+        
+        private uFrame.MVVM.IViewModelManager _BulletViewModelManager;
+        
+        [uFrame.IOC.InjectAttribute("Bullet")]
+        public uFrame.MVVM.IViewModelManager BulletViewModelManager {
+            get {
+                return _BulletViewModelManager;
+            }
+            set {
+                _BulletViewModelManager = value;
+            }
+        }
+        
+        public IEnumerable<BulletViewModel> BulletViewModels {
+            get {
+                return BulletViewModelManager.OfType<BulletViewModel>();
+            }
+        }
+        
+        public override void Setup() {
+            base.Setup();
+            // This is called when the controller is created
+        }
+        
+        public override void Initialize(uFrame.MVVM.ViewModel viewModel) {
+            base.Initialize(viewModel);
+            // This is called when a viewmodel is created
+            this.InitializeBullet(((BulletViewModel)(viewModel)));
+        }
+        
+        public virtual BulletViewModel CreateBullet() {
+            return ((BulletViewModel)(this.Create(Guid.NewGuid().ToString())));
+        }
+        
+        public override uFrame.MVVM.ViewModel CreateEmpty() {
+            return new BulletViewModel(this.EventAggregator);
+        }
+        
+        public virtual void InitializeBullet(BulletViewModel viewModel) {
+            // This is called when a BulletViewModel is created
+            BulletViewModelManager.Add(viewModel);
+        }
+        
+        public override void DisposingViewModel(uFrame.MVVM.ViewModel viewModel) {
+            base.DisposingViewModel(viewModel);
+            BulletViewModelManager.Remove(viewModel);
+        }
+    }
 }

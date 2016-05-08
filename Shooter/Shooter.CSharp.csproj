@@ -67,16 +67,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\uFrame\Core\MainDiagram\Controllers.designer.cs" />
+    <Compile Include="Assets\uFrame\Core\MainDiagram\Controllers\BulletController.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\Controllers\GameController.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\Controllers\PlayerShipController.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\Controllers\ShipController.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\SystemLoaders.designer.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\SystemLoaders\GameSubsystemLoader.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\ViewModels.designer.cs" />
+    <Compile Include="Assets\uFrame\Core\MainDiagram\ViewModels\BulletViewModel.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\ViewModels\GameViewModel.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\ViewModels\PlayerShipViewModel.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\ViewModels\ShipViewModel.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\Views.designer.cs" />
+    <Compile Include="Assets\uFrame\Core\MainDiagram\Views\BulletView.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\Views\GameView.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\Views\PlayerShipView.cs" />
     <Compile Include="Assets\uFrame\Core\MainDiagram\Views\ShipView.cs" />

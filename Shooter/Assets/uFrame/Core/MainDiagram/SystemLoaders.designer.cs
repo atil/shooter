@@ -26,6 +26,8 @@ namespace Shooter {
         
         private PlayerShipController _PlayerShipController;
         
+        private BulletController _BulletController;
+        
         [uFrame.IOC.InjectAttribute()]
         public virtual GameController GameController {
             get {
@@ -65,6 +67,19 @@ namespace Shooter {
             }
         }
         
+        [uFrame.IOC.InjectAttribute()]
+        public virtual BulletController BulletController {
+            get {
+                if (_BulletController==null) {
+                    _BulletController = Container.CreateInstance(typeof(BulletController)) as BulletController;;
+                }
+                return _BulletController;
+            }
+            set {
+                _BulletController = value;
+            }
+        }
+        
         public override void Load() {
             Container.RegisterViewModelManager<GameViewModel>(new ViewModelManager<GameViewModel>());
             Container.RegisterController<GameController>(GameController);
@@ -72,6 +87,8 @@ namespace Shooter {
             Container.RegisterController<ShipController>(ShipController);
             Container.RegisterViewModelManager<PlayerShipViewModel>(new ViewModelManager<PlayerShipViewModel>());
             Container.RegisterController<PlayerShipController>(PlayerShipController);
+            Container.RegisterViewModelManager<BulletViewModel>(new ViewModelManager<BulletViewModel>());
+            Container.RegisterController<BulletController>(BulletController);
         }
     }
 }
