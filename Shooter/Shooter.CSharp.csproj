@@ -77,6 +77,8 @@
     <Compile Include="Assets\Scripts\Elements\PlayerShip.cs" />
     <Compile Include="Assets\Scripts\Elements\Session.cs" />
     <Compile Include="Assets\Scripts\Elements\Ship.cs" />
+    <Compile Include="Assets\Scripts\InputDispatchers\IInputDispatcher.cs" />
+    <Compile Include="Assets\Scripts\InputDispatchers\PlayerInputDispatcher.cs" />
     <Compile Include="Assets\Scripts\Models\BodyModel.cs" />
     <Compile Include="Assets\Scripts\Models\BotShipModel.cs" />
     <Compile Include="Assets\Scripts\Models\BulletModel.cs" />
@@ -84,7 +86,6 @@
     <Compile Include="Assets\Scripts\Models\PlayerShipModel.cs" />
     <Compile Include="Assets\Scripts\Models\SessionModel.cs" />
     <Compile Include="Assets\Scripts\Models\ShipModel.cs" />
-    <Compile Include="Assets\Scripts\ObjectBase.cs" />
     <Compile Include="Assets\Scripts\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Views\BodyView.cs" />
     <Compile Include="Assets\Scripts\Views\BotShipView.cs" />

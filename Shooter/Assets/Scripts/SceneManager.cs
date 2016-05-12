@@ -14,7 +14,8 @@ namespace Shooter
                 return;
             }
 
-
+            Container.CreateElement<Session>();
+            Container.CreateElement<PlayerShip>();
         }
 
     }

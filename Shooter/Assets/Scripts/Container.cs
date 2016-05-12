@@ -10,7 +10,7 @@ namespace Shooter
 
     public static class Container
     {
-        private static List<ObjectBase> objects = new List<ObjectBase>();
+        private static List<ModelBase> models = new List<ModelBase>();
         private static Dictionary<Type, Type> elementToModel = new Dictionary<Type, Type>();
         private static Dictionary<Type, Type> elementToView = new Dictionary<Type, Type>();
         private static Dictionary<Type, ControllerBase> elementToController = new Dictionary<Type, ControllerBase>();
@@ -48,10 +48,7 @@ namespace Shooter
                     return false;
                 }
 
-                var controllerObj = (ControllerBase)Activator.CreateInstance(controllerType);
-                elementToController.Add(elemType, controllerObj);
-
-                objects.Add(controllerObj);
+                elementToController.Add(elemType, (ControllerBase)Activator.CreateInstance(controllerType));
             }
 
             return true;
@@ -60,14 +57,11 @@ namespace Shooter
         public static void CreateElement<T>() where T : ElementBase
         {
             var modelObj = (ModelBase)Activator.CreateInstance(elementToModel[typeof(T)]);
-            var viewObj = (ViewBase)Activator.CreateInstance(elementToView[typeof(T)]);
+            var viewObj = (UnityEngine.Object.Instantiate(ViewBase.Resources[elementToView[typeof(T)]]) as GameObject).GetComponent<ViewBase>();
             modelToView.Add(modelObj, viewObj);
-            objects.Add(modelObj);
-            objects.Add(viewObj);
+            models.Add(modelObj);
             viewObj.BindTo(modelObj);
-
-            var controllerObj = elementToController[typeof(T)];
-            controllerObj.InitModel(modelObj);
+            elementToController[typeof(T)].InitModel(modelObj);
 
             foreach (var controller in elementToController.Values)
             {
@@ -79,7 +73,7 @@ namespace Shooter
         public static void DestroyModel(ModelBase model)
         {
             var view = modelToView[model];
-            objects.Remove(model);
+            models.Remove(model);
             modelToView.Remove(model);
 
             model = null;
