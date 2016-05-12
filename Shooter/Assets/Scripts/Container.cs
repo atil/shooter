@@ -1,0 +1,89 @@
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Shooter
+{
+    public delegate void OnModelCreated(ModelBase model);
+    public delegate void OnViewCreated(ViewBase view);
+
+    public static class Container
+    {
+        private static List<ObjectBase> objects = new List<ObjectBase>();
+        private static Dictionary<Type, Type> elementToModel = new Dictionary<Type, Type>();
+        private static Dictionary<Type, Type> elementToView = new Dictionary<Type, Type>();
+        private static Dictionary<Type, ControllerBase> elementToController = new Dictionary<Type, ControllerBase>();
+        private static Dictionary<ModelBase, ViewBase> modelToView = new Dictionary<ModelBase, ViewBase>();
+
+        public static bool Init()
+        {
+            var elementTypes = (from lAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                     from lType in lAssembly.GetTypes()
+                     where typeof(ElementBase).IsAssignableFrom(lType) && lType != typeof(ElementBase)
+                     select lType).ToArray();
+
+            foreach (var elemType in elementTypes)
+            {
+                var modelType = Type.GetType("Shooter." + elemType.Name + "Model");
+                if (modelType == null)
+                {
+                    Debug.LogError("Model not found : " + elemType.Name);
+                    return false;
+                }
+                elementToModel.Add(elemType, modelType);
+
+                var viewType = Type.GetType("Shooter." + elemType.Name + "View");
+                if (viewType == null)
+                {
+                    Debug.LogError("View not found : " + elemType.Name);
+                    return false;
+                }
+                elementToView.Add(elemType, viewType);
+
+                var controllerType = Type.GetType("Shooter." + elemType.Name + "Controller");
+                if (controllerType == null)
+                {
+                    Debug.LogError("Controller not found : " + elemType.Name);
+                    return false;
+                }
+
+                var controllerObj = (ControllerBase)Activator.CreateInstance(controllerType);
+                elementToController.Add(elemType, controllerObj);
+
+                objects.Add(controllerObj);
+            }
+
+            return true;
+        }
+
+        public static void CreateElement<T>() where T : ElementBase
+        {
+            var modelObj = (ModelBase)Activator.CreateInstance(elementToModel[typeof(T)]);
+            var viewObj = (ViewBase)Activator.CreateInstance(elementToView[typeof(T)]);
+            modelToView.Add(modelObj, viewObj);
+            objects.Add(modelObj);
+            objects.Add(viewObj);
+            viewObj.BindTo(modelObj);
+
+            var controllerObj = elementToController[typeof(T)];
+            controllerObj.InitModel(modelObj);
+
+            foreach (var controller in elementToController.Values)
+            {
+                controller.OnModelCreated(modelObj);
+                controller.OnViewCreated(viewObj);
+            }
+        }
+
+        public static void DestroyModel(ModelBase model)
+        {
+            var view = modelToView[model];
+            objects.Remove(model);
+            modelToView.Remove(model);
+
+            model = null;
+        }
+    }
+
+}
