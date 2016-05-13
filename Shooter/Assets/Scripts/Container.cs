@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace Shooter
@@ -19,8 +20,15 @@ namespace Shooter
         private static readonly Dictionary<Type, ControllerBase> ElementToController = new Dictionary<Type, ControllerBase>();
         private static readonly Dictionary<ModelBase, ViewBase> ModelToView = new Dictionary<ModelBase, ViewBase>();
 
-        public static bool Init()
+        private static readonly Dictionary<Type, object> DependencyContainer = new Dictionary<Type, object>();
+
+        public static bool Init(object[] dependencies)
         {
+            foreach (var dependency in dependencies)
+            {
+                DependencyContainer.Add(dependency.GetType(), dependency);
+            }
+
             var elementTypes = (from lAssembly in AppDomain.CurrentDomain.GetAssemblies()
                      from lType in lAssembly.GetTypes()
                      where typeof(ElementBase).IsAssignableFrom(lType) && lType != typeof(ElementBase)
@@ -52,12 +60,41 @@ namespace Shooter
                 }
 
                 var controllerObj = (ControllerBase) Activator.CreateInstance(controllerType);
+                OnUpdate += controllerObj.Update;
+
                 ElementToController.Add(elemType, controllerObj);
 
-                OnUpdate += controllerObj.Update;
+                // Controllers can be dependencies
+
+                DependencyContainer.Add(controllerType, controllerObj);
+            }
+
+            // Inject dependencies to controllers
+            foreach (var controller in ElementToController.Values)
+            {
+                foreach (var field in controller.GetType()
+                   .GetPrivateFields()
+                   .Where(f => f.IsDefined(typeof(InjectAttribute), true)))
+                {
+                    if (DependencyContainer.ContainsKey(field.FieldType))
+                    {
+                        field.SetValue(controller, DependencyContainer[field.FieldType]);
+                    }
+                }
             }
 
             return true;
+        }
+
+        private static IEnumerable<FieldInfo> GetPrivateFields(this Type t) // TODO: Move to Utils.cs or something
+        {
+            if (t == null)
+            {
+                return Enumerable.Empty<FieldInfo>();
+            }
+
+            const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
+            return t.GetFields(flags).Concat(GetPrivateFields(t.BaseType));
         }
 
         public static void CreateElement<T>() where T : ElementBase

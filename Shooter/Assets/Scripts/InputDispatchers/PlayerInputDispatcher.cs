@@ -7,6 +7,8 @@ namespace Shooter
     {
         public override void Update()
         {
+            base.Update();
+
             if (Input.GetKey(KeyCode.A))
             {
                 DispatchInput(InputType.Left);
