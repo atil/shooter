@@ -9,7 +9,7 @@ namespace Shooter
         Fire
     }
 
-    public delegate void InputEvent(InputType t);
+    public delegate void InputEvent(InputType t, float strength);
 
 	public interface IInputDispatcher
 	{
@@ -24,11 +24,11 @@ namespace Shooter
 
         public virtual void Update() { }
 
-        protected void DispatchInput(InputType inputType)
+        protected void DispatchInput(InputType inputType, float strength = 1f)
         {
             if (OnInput != null)
             {
-                OnInput(inputType);
+                OnInput(inputType, strength);
             }
         }
     }

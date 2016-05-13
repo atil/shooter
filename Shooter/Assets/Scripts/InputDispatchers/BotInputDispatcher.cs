@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Shooter
 {
@@ -11,7 +12,9 @@ namespace Shooter
         {
             base.Update();
 
-            
+            DispatchInput(InputType.Left, Mathf.Sin(Time.time) * 5);
+
+            DispatchInput(InputType.Down);
         }
     }
 }
