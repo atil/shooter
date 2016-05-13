@@ -5,11 +5,20 @@ namespace Shooter
 {
 	public class PlayerShipView : ShipView
 	{
-        public override void BindTo(ModelBase model)
-        {
-            base.BindTo(model);
+	    public override void BindTo(ModelBase model)
+	    {
+	        base.BindTo(model);
 
-            var playerShipModel = (PlayerShipModel)model;
-        }
-    }
+	        ((PlayerShipModel) model).Position = transform.position;
+	    }
+
+	    protected override void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+	    {
+	        base.ModelPropertyChanged(sender, e);
+	        if (e.PropertyName == "Position")
+	        {
+	            transform.position = (Vector2) e.Value;
+	        }
+	    }
+	}
 }

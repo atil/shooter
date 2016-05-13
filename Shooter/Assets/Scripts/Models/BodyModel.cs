@@ -5,12 +5,12 @@ namespace Shooter
 {
 	public class BodyModel : ModelBase
 	{
-        private Vector3 _position;
+        private Vector2 _position;
         private Quaternion _rotation;
         private float _speed;
         private Bounds _bounds;
 
-        public Vector3 Position
+        public Vector2 Position
         {
             get
             {

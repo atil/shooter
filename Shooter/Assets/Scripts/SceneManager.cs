@@ -18,6 +18,10 @@ namespace Shooter
             Container.CreateElement<PlayerShip>();
         }
 
+        private void Update()
+        {
+            Container.Update();
+        }
     }
 
 }

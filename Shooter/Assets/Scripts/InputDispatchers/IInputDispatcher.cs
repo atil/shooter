@@ -14,5 +14,22 @@ namespace Shooter
 	public interface IInputDispatcher
 	{
         event InputEvent OnInput;
+	    void Update();
+
 	}
+
+    public class InputDispatcherBase : IInputDispatcher
+    {
+        public event InputEvent OnInput;
+
+        public virtual void Update() { }
+
+        protected void DispatchInput(InputType inputType)
+        {
+            if (OnInput != null)
+            {
+                OnInput(inputType);
+            }
+        }
+    }
 }
