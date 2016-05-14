@@ -13,7 +13,7 @@ namespace Shooter
         [SerializeField]
         private Text _livesText;
 
-        protected override void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        public override void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.ModelPropertyChanged(sender, e);
             if (e.PropertyName == "Lives")

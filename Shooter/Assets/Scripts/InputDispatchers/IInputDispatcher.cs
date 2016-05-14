@@ -14,15 +14,13 @@ namespace Shooter
 	public interface IInputDispatcher
 	{
         event InputEvent OnInput;
-	    void Update();
-
 	}
 
-    public class InputDispatcherBase : IInputDispatcher
+    public class InputDispatcherBase : MonoBehaviour, IInputDispatcher
     {
         public event InputEvent OnInput;
 
-        public virtual void Update() { }
+        protected virtual void Update() { }
 
         protected void DispatchInput(InputType inputType, float strength = 1f)
         {

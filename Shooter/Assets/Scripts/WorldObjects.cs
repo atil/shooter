@@ -6,5 +6,6 @@ namespace Shooter
     public class WorldObjects : MonoBehaviour
     {
         public BoxCollider2D BotSpawnArea;
+        public BoxCollider2D BotDespawnArea;
     }
 }

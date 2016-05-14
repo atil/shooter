@@ -5,7 +5,7 @@ namespace Shooter
 {
     public class PlayerInputDispatcher : InputDispatcherBase
     {
-        public override void Update()
+        protected override void Update()
         {
             base.Update();
 

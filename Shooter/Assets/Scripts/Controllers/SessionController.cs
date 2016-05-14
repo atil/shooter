@@ -7,9 +7,9 @@ namespace Shooter
 	{
         private SessionModel _sessionModel;
 
-        public override void InitModel(ModelBase m)
+        public override void InitModelView(ModelBase m, ViewBase v)
         {
-            base.InitModel(m);
+            base.InitModelView(m, v);
             Debug.Assert(_sessionModel == null, "There shouldn't be more than one sessions");
             _sessionModel = (SessionModel)m;
             _sessionModel.Lives = 3;

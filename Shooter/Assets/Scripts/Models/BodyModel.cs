@@ -8,7 +8,6 @@ namespace Shooter
         private Vector2 _position;
         private Quaternion _rotation;
         private float _speed;
-        private Bounds _bounds;
 
         public Vector2 Position
         {
@@ -51,20 +50,6 @@ namespace Shooter
                 _speed = value;
                 NotifyPropertyChange("Speed", _speed);
 
-            }
-        }
-
-        public Bounds Bounds
-        {
-            get
-            {
-                return _bounds;
-            }
-
-            set
-            {
-                _bounds = value;
-                NotifyPropertyChange("Bounds", _bounds);
             }
         }
 

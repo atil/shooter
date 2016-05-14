@@ -28,7 +28,6 @@ namespace Shooter
 
         private void Update()
         {
-            Container.Update();
         }
     }
 

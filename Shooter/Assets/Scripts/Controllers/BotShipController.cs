@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Shooter
 {
@@ -7,10 +8,11 @@ namespace Shooter
 	{
 	    [Inject]
         private WorldObjects _worldObjects;
+        private List<BotShipModel> _botShips = new List<BotShipModel>();
 
-	    public override void InitModel(ModelBase m)
+	    public override void InitModelView(ModelBase m, ViewBase v)
 	    {
-	        base.InitModel(m);
+	        base.InitModelView(m, v);
 	        var botModel = (BotShipModel)m;
 	        botModel.Speed = 0.01f;
 
@@ -20,13 +22,8 @@ namespace Shooter
 	        botModel.Position = randomPoint;
 	        botModel.Rotation = Quaternion.AngleAxis(180f, Vector3.forward);
 
-	        SetInputDispathcer(botModel, new BotInputDispatcher());
+	        //SetInputDispathcer(botModel, new BotInputDispatcher(Random.Range(1f, 5f)));
 	    }
 
-	    public override void Update()
-	    {
-	        base.Update();
-            // Destroy bots when they are out of screen
-	    }
 	}
 }

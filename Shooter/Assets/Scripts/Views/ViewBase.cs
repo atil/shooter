@@ -6,6 +6,8 @@ using Object = UnityEngine.Object;
 
 namespace Shooter
 {
+    public delegate void OnInputDispatchHandler(InputType inputType, float strength);
+
     public abstract class ViewBase : MonoBehaviour
     {
         public static Dictionary<Type, Object> Resources;
@@ -22,17 +24,30 @@ namespace Shooter
             };
         }
 
+        public event OnInputDispatchHandler OnInputDispatch;
 
-        public virtual void BindTo(ModelBase model)
+        private IInputDispatcher _inputDispatcher;
+        protected IInputDispatcher InputDispatcher
         {
-            model.PropertyChanged += ModelPropertyChanged;
+            get { return _inputDispatcher; }
+            set
+            {
+                _inputDispatcher = value;
+                _inputDispatcher.OnInput += (type, str) =>
+                {
+                    if (OnInputDispatch != null)
+                    {
+                        OnInputDispatch(type, str);
+                    }
+                };
+            }
         }
 
-        protected virtual void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-        }
+        protected virtual void Awake() { }
 
-        public virtual void OnModelDestroyed() { }
+        public virtual void ModelPropertyChanged(object sender, PropertyChangedEventArgs e) { }
+
+        public virtual void OnDestroyed() { }
     }
 
 }

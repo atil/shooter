@@ -8,17 +8,12 @@ namespace Shooter
 {
     public delegate void OnModelCreated(ModelBase model);
     public delegate void OnViewCreated(ViewBase view);
-    public delegate void UpdateHandler();
 
     public static class Container
     {
-        private static event UpdateHandler OnUpdate;
-
-        private static readonly List<ModelBase> Models = new List<ModelBase>();
         private static readonly Dictionary<Type, Type> ElementToModel = new Dictionary<Type, Type>();
         private static readonly Dictionary<Type, Type> ElementToView = new Dictionary<Type, Type>();
         private static readonly Dictionary<Type, ControllerBase> ElementToController = new Dictionary<Type, ControllerBase>();
-        private static readonly Dictionary<ModelBase, ViewBase> ModelToView = new Dictionary<ModelBase, ViewBase>();
 
         private static readonly Dictionary<Type, object> DependencyContainer = new Dictionary<Type, object>();
 
@@ -60,7 +55,6 @@ namespace Shooter
                 }
 
                 var controllerObj = (ControllerBase) Activator.CreateInstance(controllerType);
-                OnUpdate += controllerObj.Update;
 
                 ElementToController.Add(elemType, controllerObj);
 
@@ -102,35 +96,12 @@ namespace Shooter
             var modelObj = (ModelBase)Activator.CreateInstance(ElementToModel[typeof(T)]);
             var viewObj = (UnityEngine.Object.Instantiate(ViewBase.Resources[ElementToView[typeof(T)]]) as GameObject).GetComponent<ViewBase>();
 
-            ModelToView.Add(modelObj, viewObj);
-            Models.Add(modelObj);
-            viewObj.BindTo(modelObj);
-            ElementToController[typeof(T)].InitModel(modelObj);
+            viewObj.name += UnityEngine.Random.Range(1, 999);
 
-            foreach (var controller in ElementToController.Values)
-            {
-                controller.OnModelCreated(modelObj);
-                controller.OnViewCreated(viewObj);
-            }
+            ElementToController[typeof(T)].InitModelView(modelObj, viewObj);
+
         }
 
-        public static void DestroyModel(ModelBase model)
-        {
-            var view = ModelToView[model];
-            view.OnModelDestroyed();
-            Models.Remove(model);
-            ModelToView.Remove(model);
-
-            model = null;
-        }
-
-        public static void Update()
-        {
-            if (OnUpdate != null)
-            {
-                OnUpdate();
-            }
-        }
     }
 
 }
