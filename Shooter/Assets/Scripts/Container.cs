@@ -75,6 +75,8 @@ namespace Shooter
                         field.SetValue(controller, DependencyContainer[field.FieldType]);
                     }
                 }
+
+                controller.Init();
             }
 
             return true;

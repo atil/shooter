@@ -47,7 +47,10 @@ namespace Shooter
 
         public virtual void ModelPropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
-        public virtual void OnDestroyed() { }
+        public virtual void OnDestroyed()
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

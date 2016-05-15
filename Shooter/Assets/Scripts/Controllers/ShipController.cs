@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Shooter
 {
-	public class ShipController : BodyController
+	public class ShipController : ControllerBase
 	{
 		
 	}

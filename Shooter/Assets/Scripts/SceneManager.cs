@@ -8,7 +8,7 @@ namespace Shooter
         [SerializeField]
         private WorldObjects _worldObjects;
 
-        private void Awake()
+        private void Start()
         {
             var initSucc = Container.Init(new object[] { _worldObjects });
 
@@ -18,17 +18,9 @@ namespace Shooter
             }
 
             Container.CreateElement<Session>();
-            Container.CreateElement<PlayerShip>();
-
-            for (var i = 0; i < 20; i++)
-            {
-                Container.CreateElement<BotShip>();
-            }
+           
         }
 
-        private void Update()
-        {
-        }
     }
 
 }

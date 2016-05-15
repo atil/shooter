@@ -4,15 +4,44 @@ using System.Collections;
 
 namespace Shooter
 {
-	public class PlayerShipController : ShipController
+	public class PlayerShipController : ControllerBase
 	{
-        public override void InitModelView(ModelBase m, ViewBase v)
+        [Inject]
+        private BodyController _bodyController;
+
+        public override void InitModelView(ModelBase model, ViewBase view)
         {
-            base.InitModelView(m, v);
-            var playerModel = (PlayerShipModel)m;
+            base.InitModelView(model, view);
+            var playerModel = (PlayerShipModel)model;
             playerModel.Speed = 0.05f;
-            //SetInputDispathcer(playerModel, new PlayerInputDispatcher());
+
+            ((BodyView)view).OnVolumeEnter += _bodyController.OnVolumeEnter;
+
         }
-        
-	}
+        protected override void OnInput(ModelBase modelBase, InputType inputType, float inputStrength)
+        {
+            var model = (PlayerShipModel)modelBase;
+            switch (inputType)
+            {
+                case InputType.Up:
+                    model.Position += Vector2.up * model.Speed * inputStrength;
+                    break;
+                case InputType.Down:
+                    model.Position += Vector2.down * model.Speed * inputStrength;
+                    break;
+                case InputType.Left:
+                    model.Position += Vector2.left * model.Speed * inputStrength;
+                    break;
+                case InputType.Right:
+                    model.Position += Vector2.right * model.Speed * inputStrength;
+                    break;
+                case InputType.Fire:
+                    // TODO ...
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("t", inputType, null);
+            }
+        }
+
+    }
 }
