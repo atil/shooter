@@ -29,7 +29,7 @@ namespace Shooter
                 DispatchInput(InputType.Up);
             }
 
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 DispatchInput(InputType.Fire);
             }

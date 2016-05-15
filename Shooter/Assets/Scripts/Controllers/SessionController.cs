@@ -51,7 +51,7 @@ namespace Shooter
 
         private void OnBotDied(ViewBase killerView)
         {
-            if (killerView is PlayerShipView)
+            if (killerView is BulletView)
             {
                 _sessionModel.Score += 10;
             }

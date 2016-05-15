@@ -12,8 +12,7 @@ namespace Shooter
         public override void InitModelView(ModelBase model, ViewBase view)
         {
             base.InitModelView(model, view);
-            var playerModel = (PlayerShipModel)model;
-            playerModel.Speed = 0.05f;
+            ((PlayerShipModel)model).Speed = 0.05f;
 
             ((BodyView)view).OnVolumeEnter += _bodyController.OnVolumeEnter;
 
@@ -36,7 +35,7 @@ namespace Shooter
                     model.Position += Vector2.right * model.Speed * inputStrength;
                     break;
                 case InputType.Fire:
-                    // TODO ...
+                    Container.CreateElement<Bullet>();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("t", inputType, null);

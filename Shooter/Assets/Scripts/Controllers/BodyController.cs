@@ -35,6 +35,7 @@ namespace Shooter
                     OnBotDied(collidee);
                 }
             }
+
         }
     }
 

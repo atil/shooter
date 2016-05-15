@@ -24,6 +24,18 @@ namespace Shooter
 
         protected virtual void OnInput(ModelBase modelBase, InputType inputType, float inputStrength) { }
 
+        protected T GetView<T>() where T : ViewBase
+        {
+            return ViewToModel.Keys.FirstOrDefault(x => x is T) as T;
+        }
+
+        protected ModelBase GetModelOfView<T>() where T : ViewBase
+        {
+            var view = GetView<T>();
+
+            return view != null ? ViewToModel[view] : null; 
+        }
+
         protected void DestroyViews<T>() where T : ViewBase
         {
             var viewsToDestroy = ViewToModel.Keys.Where(x => x.GetType() == typeof(T)).ToList();
