@@ -27,7 +27,6 @@ namespace Shooter
         {
             CoroutineStarter.DelayedExecution(1, () =>
             {
-                Debug.Log("test");
             });
         }
 

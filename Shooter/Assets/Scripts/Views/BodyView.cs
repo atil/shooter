@@ -28,7 +28,7 @@ namespace Shooter
 
         private void OnTriggerEnter2D(Collider2D coll)
         {
-            if (OnVolumeEnter != null && coll.GetComponent<ViewBase>() != null)
+            if (OnVolumeEnter != null)
             {
                 OnVolumeEnter(this, coll.GetComponent<ViewBase>());
             }

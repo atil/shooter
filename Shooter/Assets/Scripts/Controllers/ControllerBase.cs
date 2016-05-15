@@ -19,13 +19,10 @@ namespace Shooter
             {
                 OnInput(ViewToModel[view], inputType, strength);
             };
-
         }
 
-        protected virtual void OnInput(ModelBase modelBase, InputType inputType, float inputStrength)
-        {
+        protected virtual void OnInput(ModelBase modelBase, InputType inputType, float inputStrength) { }
 
-        }
         protected void DestroyView(ViewBase view)
         {
             view.OnDestroyed();
@@ -33,8 +30,6 @@ namespace Shooter
             model = null;
             ViewToModel.Remove(view);
         }
-
-
     }
 
 }
