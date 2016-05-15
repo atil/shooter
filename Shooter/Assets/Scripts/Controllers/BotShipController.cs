@@ -12,6 +12,7 @@ namespace Shooter
 
 	    [Inject]
         private WorldObjects _worldObjects;
+
         private List<BotShipModel> _botShips = new List<BotShipModel>();
 
 	    public override void InitModelView(ModelBase model, ViewBase view)
@@ -20,14 +21,30 @@ namespace Shooter
 	        var botModel = (BotShipModel)model;
 	        botModel.Speed = 0.01f;
 
-	        var coll = _worldObjects.BotSpawnArea;
-	        var randomPoint = coll.bounds.center + coll.bounds.extents * UnityEngine.Random.Range(-1f, 1f); // TODO: Not random enough
+	        botModel.Position = RandomPointInVolume(_worldObjects.BotSpawnArea.bounds);
+            botModel.Rotation = Quaternion.AngleAxis(180f, Vector3.forward);
 
-	        botModel.Position = randomPoint;
-	        botModel.Rotation = Quaternion.AngleAxis(180f, Vector3.forward);
-
-            ((BodyView)view).OnVolumeEnter += _bodyController.OnVolumeEnter;
+            ((BodyView)view).OnVolumeEnter += OnVolumeEnter;
 	    }
+
+        private Vector3 RandomPointInVolume(Bounds bounds)
+        {
+	        return bounds.center + bounds.extents * UnityEngine.Random.Range(-1f, 1f); // TODO: Not random enough
+        }
+
+        private void OnVolumeEnter(ViewBase view1, ViewBase view2)
+        {
+            if (view2 == null) // Environment
+            {
+                // Environment kills respawns bot
+                ((BotShipModel)ViewToModel[view1]).Position = RandomPointInVolume(_worldObjects.BotSpawnArea.bounds);
+            }
+            else
+            {
+                _bodyController.OnVolumeEnter(view1, view2);
+            }
+        }
+
         protected override void OnInput(ModelBase modelBase, InputType inputType, float inputStrength)
         {
             var model = (BotShipModel)modelBase;
