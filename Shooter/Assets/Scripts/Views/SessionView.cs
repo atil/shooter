@@ -23,6 +23,9 @@ namespace Shooter
         [SerializeField]
         private Button _replayButton;
 
+        [SerializeField]
+        private Text _pausedText;
+
         protected override void Awake()
         {
             _replayButton.onClick.AddListener(() =>
@@ -32,6 +35,7 @@ namespace Shooter
                     OnReplayClicked();
                 }
             });
+            InputDispatcher = gameObject.AddComponent<SessionInputDispatcher>();
         }
 
         public override void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -57,6 +61,11 @@ namespace Shooter
         {
             _gameOverText.gameObject.SetActive(true);
             _replayButton.gameObject.SetActive(true);
+        }
+
+        public void SetPaused(bool isPaused)
+        {
+            _pausedText.gameObject.SetActive(isPaused);
         }
     }
 }

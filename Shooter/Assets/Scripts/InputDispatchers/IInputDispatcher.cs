@@ -6,7 +6,9 @@ namespace Shooter
     public enum InputType
     {
         Up, Down, Left, Right,
-        Fire
+        Fire,
+        Replay,
+        Pause
     }
 
     public delegate void InputEvent(InputType t, float strength);
@@ -24,6 +26,12 @@ namespace Shooter
 
         protected void DispatchInput(InputType inputType, float strength = 1f)
         {
+            if (Session.IsPaused // No inputs will be dispatched if paused
+                && inputType != InputType.Pause) // Pauses always pass, though 
+            {
+                return;
+            }
+
             if (OnInput != null)
             {
                 OnInput(inputType, strength);

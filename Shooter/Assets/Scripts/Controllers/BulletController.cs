@@ -34,9 +34,6 @@ namespace Shooter
                 case InputType.Right:
                     model.Position += Vector2.right * model.Speed * inputStrength;
                     break;
-                case InputType.Fire:
-                    // TODO ...
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException("t", inputType, null);
             }

@@ -10,13 +10,14 @@ namespace Shooter
 
         private SessionModel _sessionModel;
         private SessionView _sessionView;
+        private bool _isPaused;
 
         public override void Init()
         {
             base.Init();
             _bodyController.OnPlayerDied += OnPlayerDied;
             _bodyController.OnBotDied += OnBotDied;
-
+            Session.IsPaused = false;
         }
 
         private void InitScene()
@@ -75,6 +76,17 @@ namespace Shooter
         private void OnReplay()
         {
             InitScene();
+        }
+
+        protected override void OnInput(ModelBase modelBase, InputType inputType, float inputStrength)
+        {
+            base.OnInput(modelBase, inputType, inputStrength);
+            if (inputType == InputType.Pause)
+            {
+                Session.IsPaused = !Session.IsPaused;
+                _sessionView.SetPaused(Session.IsPaused);
+            }
+
         }
     }
 }
