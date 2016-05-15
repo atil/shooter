@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shooter
 {
@@ -22,6 +23,15 @@ namespace Shooter
         }
 
         protected virtual void OnInput(ModelBase modelBase, InputType inputType, float inputStrength) { }
+
+        protected void DestroyViews<T>() where T : ViewBase
+        {
+            var viewsToDestroy = ViewToModel.Keys.Where(x => x.GetType() == typeof(T)).ToList();
+            foreach (var view in viewsToDestroy)
+            {
+                DestroyView(view);
+            }
+        }
 
         protected void DestroyView(ViewBase view)
         {

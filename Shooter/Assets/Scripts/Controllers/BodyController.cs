@@ -7,7 +7,7 @@ using System.Linq;
 namespace Shooter
 {
     public delegate void OnPlayerDiedHandler();
-    public delegate void OnBotDiedHandler();
+    public delegate void OnBotDiedHandler(ViewBase killerView);
 
 	public class BodyController : ControllerBase
 	{
@@ -32,7 +32,7 @@ namespace Shooter
             {
                 if (OnBotDied != null)
                 {
-                    OnBotDied();
+                    OnBotDied(collidee);
                 }
             }
         }
