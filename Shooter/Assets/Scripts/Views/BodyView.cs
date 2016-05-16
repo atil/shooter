@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Shooter
 {
-    public delegate void OnTriggerEnterHandler(ViewBase view1, ViewBase view2);
+    public delegate void OnTriggerEnterHandler(BodyView view1, BodyView view2);
 
 	public class BodyView : ViewBase
 	{
@@ -30,7 +30,7 @@ namespace Shooter
         {
             if (OnVolumeEnter != null)
             {
-                OnVolumeEnter(this, coll.GetComponent<ViewBase>());
+                OnVolumeEnter(this, coll.GetComponent<BodyView>());
             }
         }
 

@@ -6,34 +6,34 @@ using System.Linq;
 
 namespace Shooter
 {
-    public delegate void OnPlayerDiedHandler();
-    public delegate void OnBotDiedHandler(ViewBase killerView);
 
 	public class BodyController : ControllerBase
 	{
-        public event OnPlayerDiedHandler OnPlayerDied;
-        public event OnBotDiedHandler OnBotDied;
+	    [Inject]
+        private SessionController _sessionController;
 
-        public void OnVolumeEnter(ViewBase collider, ViewBase collidee)
+	    [Inject]
+        private BotShipController _botShipController;
+
+        public void OnVolumeEnter(BodyView collider, BodyView collidee)
         {
-
-            DestroyView(collider);
-
-            // TODO: Below looks bad
             if (collider is PlayerShipView)
             {
-                if (OnPlayerDied != null)
-                {
-                    OnPlayerDied();
-                }
+                _sessionController.OnPlayerDied((PlayerShipView)collider, collidee);
+                DestroyView(collider);
             }
 
             if (collider is BotShipView)
             {
-                if (OnBotDied != null)
-                {
-                    OnBotDied(collidee);
-                }
+                // Kills actually respawn bot
+                _botShipController.RespawnBotView((BotShipView)collider);
+
+                _sessionController.OnBotDied((BotShipView)collider, collidee);
+            }
+
+            if (collider is BulletView)
+            {
+                DestroyView(collider);
             }
 
         }

@@ -5,7 +5,13 @@ namespace Shooter
 {
     public class PlayerInputDispatcher : InputDispatcherBase
     {
-        const float MouseStrength = 4f;
+        private const float MouseStrength = 4f;
+
+        private void Awake()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
         protected override void Update()
         {

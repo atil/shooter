@@ -1,9 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using Newtonsoft.Json;
-using Object = UnityEngine.Object;
 
 namespace Shooter
 {
@@ -11,22 +6,6 @@ namespace Shooter
 
     public abstract class ViewBase : MonoBehaviour
     {
-        public static Dictionary<Type, Object> Resources;
-
-        static ViewBase()
-        {
-            Resources = new Dictionary<Type, Object>()
-            {
-                // TODO: These paths should be read from an xml / json
-                {typeof(SessionView), UnityEngine.Resources.Load<Object>("Prefabs/SessionView")},
-                {typeof(PlayerShipView), UnityEngine.Resources.Load<Object>("Prefabs/PlayerShipView")},
-                {typeof(BotShipView), UnityEngine.Resources.Load<Object>("Prefabs/BotShipView")},
-                {typeof(BulletView), UnityEngine.Resources.Load<Object>("Prefabs/BulletView")},
-            };
-
-            
-        }
-
         public event OnInputDispatchHandler OnInputDispatch;
 
         private IInputDispatcher _inputDispatcher;

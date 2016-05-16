@@ -5,8 +5,6 @@ namespace Shooter
 {
     public class SessionController : ControllerBase
     {
-        [Inject]
-        private BodyController _bodyController;
 
         private SessionModel _sessionModel;
         private SessionView _sessionView;
@@ -14,8 +12,6 @@ namespace Shooter
         public override void Init()
         {
             base.Init();
-            _bodyController.OnPlayerDied += OnPlayerDied;
-            _bodyController.OnBotDied += OnBotDied;
             Session.IsPaused = false;
         }
 
@@ -33,7 +29,7 @@ namespace Shooter
             }
         }
 
-        private void OnPlayerDied()
+        public void OnPlayerDied(PlayerShipView playerView, BodyView killerView)
         {
             CoroutineStarter.DelayedExecution(1, () =>
             {
@@ -44,19 +40,22 @@ namespace Shooter
                 }
                 else
                 {
+                    // Respawn
                     Container.CreateElement<PlayerShip>();
                 }
             });
         }
 
-        private void OnBotDied(ViewBase killerView)
+        public void OnBotDied(BotShipView botView, BodyView killerView)
         {
             if (killerView is BulletView)
             {
-                _sessionModel.Score += 10;
+                // Player killed a bot, increment score
+                _sessionModel.Score += ((BotShipModel)ViewToModel[botView]).Score;
             }
         }
 
+      
         public override void InitModelView(ModelBase m, ViewBase v)
         {
             base.InitModelView(m, v);
