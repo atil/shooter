@@ -16,7 +16,7 @@ namespace Shooter
 
         public void OnVolumeEnter(ViewBase collider, ViewBase collidee)
         {
-            var collidedModel = ViewToModel[collider] as BodyModel;
+
             DestroyView(collider);
 
             // TODO: Below looks bad

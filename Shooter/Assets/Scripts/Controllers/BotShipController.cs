@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 
 namespace Shooter
@@ -12,8 +10,6 @@ namespace Shooter
 
 	    [Inject]
         private WorldObjects _worldObjects;
-
-        private List<BotShipModel> _botShips = new List<BotShipModel>();
 
 	    public override void InitModelView(ModelBase model, ViewBase view)
 	    {
@@ -66,7 +62,7 @@ namespace Shooter
                     // TODO ...
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("t", inputType, null);
+                    throw new ArgumentOutOfRangeException("inputType", inputType, null);
             }
         }
 

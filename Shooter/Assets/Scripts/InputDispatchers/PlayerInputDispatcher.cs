@@ -5,12 +5,7 @@ namespace Shooter
 {
     public class PlayerInputDispatcher : InputDispatcherBase
     {
-        private Vector3 _prevMousePos;
-
-        private void Awake()
-        {
-            _prevMousePos = Input.mousePosition;
-        }
+        const float MouseStrength = 4f;
 
         protected override void Update()
         {
@@ -44,13 +39,15 @@ namespace Shooter
             #endregion
 
             #region Mouse
-            var delta = Input.mousePosition - _prevMousePos;
-            const float mouseStr = 4f;
 
-            DispatchInput(InputType.Right, Input.GetAxis("Mouse X") * mouseStr);
-            DispatchInput(InputType.Up, Input.GetAxis("Mouse Y") * mouseStr);
+            DispatchInput(InputType.Right, Input.GetAxis("Mouse X") * MouseStrength);
+            DispatchInput(InputType.Up, Input.GetAxis("Mouse Y") * MouseStrength);
 
-            _prevMousePos = Input.mousePosition;
+            if (Input.GetMouseButtonDown(0))
+            {
+                DispatchInput(InputType.Fire);
+            }
+
             #endregion
         }
 

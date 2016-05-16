@@ -10,7 +10,7 @@ namespace Shooter
         public event OnTriggerEnterHandler OnVolumeEnter;
 
         [SerializeField]
-        private GameObject _sprite;
+        protected GameObject Sprite;
 
         public override void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

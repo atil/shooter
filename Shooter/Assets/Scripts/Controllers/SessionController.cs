@@ -10,7 +10,6 @@ namespace Shooter
 
         private SessionModel _sessionModel;
         private SessionView _sessionView;
-        private bool _isPaused;
 
         public override void Init()
         {
