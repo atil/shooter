@@ -6,9 +6,6 @@ using UnityEngine;
 
 namespace Shooter
 {
-    public delegate void OnModelCreated(ModelBase model);
-    public delegate void OnViewCreated(ViewBase view);
-
     public static class Container
     {
         private static readonly Dictionary<Type, Type> ElementToModel = new Dictionary<Type, Type>();
@@ -59,7 +56,6 @@ namespace Shooter
                 ElementToController.Add(elemType, controllerObj);
 
                 // Controllers can be dependencies
-
                 DependencyContainer.Add(controllerType, controllerObj);
             }
 

@@ -15,13 +15,15 @@ namespace Shooter
             Session.IsPaused = false;
         }
 
-        private void InitScene()
+        private void RefreshScene()
         {
             _sessionView.OnPlay();
             _sessionModel.Lives = 3;
             _sessionModel.Score = 0;
 
             Container.CreateElement<PlayerShip>();
+
+            // Refresh bots
             DestroyViews<BotShipView>();
             for (var i = 0; i < 20; i++)
             {
@@ -50,7 +52,7 @@ namespace Shooter
         {
             if (killerView is BulletView)
             {
-                // Player killed a bot, increment score
+                // Player killed a bot with a bullet, increment score
                 _sessionModel.Score += ((BotShipModel)ViewToModel[botView]).Score;
             }
         }
@@ -68,12 +70,12 @@ namespace Shooter
             _sessionView.OnPlay();
             _sessionView.OnReplayClicked += OnReplay;
 
-            InitScene();
+            RefreshScene();
         }
 
         private void OnReplay()
         {
-            InitScene();
+            RefreshScene();
         }
 
         protected override void OnInput(ModelBase modelBase, InputType inputType, float inputStrength)
