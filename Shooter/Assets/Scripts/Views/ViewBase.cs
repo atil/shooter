@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Newtonsoft.Json;
 using Object = UnityEngine.Object;
 
 namespace Shooter
@@ -22,6 +23,8 @@ namespace Shooter
                 {typeof(BotShipView), UnityEngine.Resources.Load<Object>("Prefabs/BotShipView")},
                 {typeof(BulletView), UnityEngine.Resources.Load<Object>("Prefabs/BulletView")},
             };
+
+            
         }
 
         public event OnInputDispatchHandler OnInputDispatch;

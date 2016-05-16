@@ -96,7 +96,8 @@ namespace Shooter
         public static void CreateElement<T>() where T : ElementBase
         {
             var modelObj = (ModelBase)Activator.CreateInstance(ElementToModel[typeof(T)]);
-            var viewObj = (UnityEngine.Object.Instantiate(ViewBase.Resources[ElementToView[typeof(T)]]) as GameObject).GetComponent<ViewBase>();
+            var resourceObj = ShooterResources.GetResource(ElementToView[typeof (T)]);
+            var viewObj = ((GameObject)UnityEngine.Object.Instantiate(resourceObj)).GetComponent<ViewBase>();
 
             viewObj.name += UnityEngine.Random.Range(1, 999);
 
